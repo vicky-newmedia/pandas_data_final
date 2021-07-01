@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+
+    <title>Douban Movie Data Show </title>
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/font-icon-style.css">
+    <link rel="stylesheet" href="/static/css/style.default.css" id="theme-stylesheet">
+     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/static/css/ui-elements/card.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body> 
+
+<!--====================================================
+                         MAIN NAVBAR
+======================================================-->        
+    <header class="header">
+        <nav class="navbar navbar-expand-lg ">
+            <div class="search-box">
+                <button class="dismiss"><i class="icon-close"></i></button>
+                <form id="searchForm" action="#" role="search">
+                    <input type="search" placeholder="Search Now" class="form-control">
+                </form>
+            </div>
+            <div class="container-fluid ">
+                <div class="navbar-holder d-flex align-items-center justify-content-between">
+                    <div class="navbar-header">
+                        <a href="index.html" class="navbar-brand">
+                            <div class="brand-text brand-big hidden-lg-down"><img src="/static/img/logo-white.png" alt="Logo" class="img-fluid"></div>
+                            <div class="brand-text brand-small"><img src="/static/img/logo-icon.png" alt="Logo" class="img-fluid"></div>
+                        </a>
+                        <a id="toggle-btn" href="#" class="menu-btn active">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </a>
+                    </div>
+                </div>
+                <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                    <!-- Expand-->
+                    <li class="nav-item d-flex align-items-center full_scr_exp"><a class="nav-link" href="#"><img src="/static/img/expand.png" onclick="toggleFullScreen(document.body)" class="img-fluid" alt=""></a></li>
+                    <!-- Search-->
+                    <li class="nav-item d-flex align-items-center"><a id="search" class="nav-link" href="#"><i class="icon-search"></i></a></li>
+                    <!-- Notifications-->
+                    <li class="nav-item dropdown"> 
+                        <a id="notifications" class="nav-link" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell-o"></i><span class="noti-numb-bg"></span><span class="badge">12</span></a>
+                        <ul aria-labelledby="notifications" class="dropdown-menu">
+                            <li>
+                                <a rel="nofollow" href="#" class="dropdown-item nav-link">
+                                    <div class="notification">
+                                        <div class="notification-content"><i class="fa fa-envelope bg-red"></i>你有6条信息 </div>
+                                        <div class="notification-time"><small>4分钟前</small></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a rel="nofollow" href="#" class="dropdown-item nav-link">
+                                    <div class="notification">
+                                        <div class="notification-content"><i class="fa fa-twitter bg-skyblue"></i>你有两个浏览者</div>
+                                        <div class="notification-time"><small>4分钟前</small></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a rel="nofollow" href="#" class="dropdown-item nav-link">
+                                    <div class="notification">
+                                        <div class="notification-content"><i class="fa fa-upload bg-blue"></i>系统管理</div>
+                                        <div class="notification-time"><small>4分钟前</small></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a rel="nofollow" href="#" class="dropdown-item nav-link">
+                                    <div class="notification">
+                                        <div class="notification-content"><i class="fa fa-twitter bg-skyblue"></i>你有两个浏览者</div>
+                                        <div class="notification-time"><small>10分钟前</small></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>展开所有通知                                            </strong></a></li>
+                        </ul>
+                    </li>
+                    <!-- Messages                        -->
+                    <li class="nav-item dropdown"> <a id="messages" class="nav-link logout" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-envelope-o"></i><span class="noti-numb-bg"></span><span class="badge">10</span></a>
+                        <ul aria-labelledby="messages" class="dropdown-menu">
+                            <li>
+                                <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                    <div class="msg-profile"> <img src="/static/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                    <div class="msg-body">
+                                        <h3 class="h5 msg-nav-h3">Grander</h3><span>发送了消息</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                    <div class="msg-profile"> <img src="/static/img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                    <div class="msg-body">
+                                        <h3 class="h5 msg-nav-h3">Ben</h3><span>发送了消息</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>展开所有消息    </strong></a></li>
+                        </ul>
+                    </li> 
+                    <li class="nav-item dropdown"><a id="profile" class="nav-link logout" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/static/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle" style="height: 30px; width: 30px;"></a>
+                        <ul aria-labelledby="profile" class="dropdown-menu profile">
+                            <li>
+                                <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                    <div class="msg-profile"> <img src="/static/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                    <div class="msg-body">
+                                        <h3 class="h5">vicky</h3><span>vicky-newmedia@qq.com</span>
+                                    </div>
+                                </a>
+                                <hr>
+                            </li>
+                            <li>
+                                <a rel="nofollow" href="profile.html" class="dropdown-item">
+                                    <div class="notification">
+                                        <div class="notification-content"><i class="fa fa-user "></i>我的账户</div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a rel="nofollow" href="profile.html" class="dropdown-item">
+                                    <div class="notification">
+                                        <div class="notification-content"><i class="fa fa-cog"></i>设置</div>
+                                    </div>
+                                </a>
+                                <hr>
+                            </li>
+                            <li>
+                                <a rel="nofollow" href="profile.html" class="dropdown-item">
+                                    <div class="notification">
+                                        <div class="notification-content"><i class="fa fa-power-off"></i>登出</div>
+                                    </div>
+                                </a> 
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item d-flex align-items-center"><a id="menu-toggle-right" class="nav-link" href="#"><i class="fa fa-bars"></i></a></li>
+                                       <nav id="sidebar-wrapper">
+                                         <div class="sidebar-nav">
+                                           <div class="tab" role="tabpanel">
+                                               <ul class="nav nav-tabs" role="tablist">
+{#                                                 <li class="nav-item ">#}
+{#                                                   <a class="nav-link active" href="#live" role="tab" data-toggle="tab"><i class="fa fa-globe"></i> Live</a>#}
+{#                                                 </li>#}
+                                                 <li class="nav-item">
+                                                   <a class="nav-link" href="#trend" role="tab" data-toggle="tab"><i class="fa fa-rocket"></i> 环形图</a>
+                                                 </li>
+                                               </ul>
+                                               <div class="tab-content tabs">
+{#                                                 <div role="tabpanel" class="tab-pane fade show active" id="live">#}
+{#                                                   <div class="content newsf-list">#}
+{#                                                   </div>#}
+{#                                                 </div>#}
+                                                 <div role="tabpanel" class="tab-pane fade" id="trend">
+                                                   <div class="card card-c2" style="box-shadow: 0 0 0;">
+                                                       <div class="header">
+                                                           <h3 class="title">不同国家电影上榜数量环形图</h3>
+                                                       </div>
+                                                       <div class="content">
+                                                           <canvas class="ct-chart" id="myChart4" height="250"></canvas>
+                                                           <div class="footer">
+                                                               <div class="legend">
+                                                                   <i class="fa fa-circle text-info"></i> 英国
+                                                                   <i class="fa fa-circle text-danger"></i> 德国
+                                                                   <i class="fa fa-circle text-warning"></i> 日本
+                                                               </div>
+{#                                                               <hr>#}
+                                                               <div class="stats">
+                                                                   <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
+                                                               </div>
+                                                           </div>
+                                                       </div>
+                                                   </div>
+                                                 </div>
+                                              </div>
+                                         </div>
+                                       </nav>
+                                   </ul>
+            </div>
+        </nav>
+    </header>
+
+<!--====================================================
+                        PAGE CONTENT
+======================================================-->
+    <div class="page-content d-flex align-items-stretch">
+
+        <!--***** SIDE NAVBAR *****-->
+        <nav class="side-navbar">
+            <div class="sidebar-header d-flex align-items-center">
+                <div class="avatar"><img src="/static/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                <div class="title">
+                    <h1 class="h4">vicky</h1>
+                </div>
+            </div>
+            <hr>
+            <!-- Sidebar Navidation Menus-->
+            <ul class="list-unstyled">
+                <li class="active"> <a href="index.html"><i class="icon-home"></i>主页</a></li>
+
+                <li><a href="#forms" aria-expanded="false" data-toggle="collapse"> <i class="icon-grid"></i>静态表格数据 </a>
+                    <ul id="forms" class="collapse list-unstyled">
+                        <li><a href="Static_state.html">静态可视化图</a></li>
+                        <li><a href="Tables_Animation.html">Animation类型电影数据</a></li>
+                        <li><a href="Tables_Drama.html">Drama类型电影数据</a></li>
+                        <li><a href="Tables_Comedy.html">Comedy类型电影数据</a></li>
+                        <li><a href="Tables_Film_Noir.html">Film-Noir类型电影数据</a></li>
+                        <li><a href="Tables_Western.html">Western类型电影数据</a></li>
+                        <li><a href="Tables_Romance.html">Romance类型电影数据</a></li>
+                        <li><a href="Tables_Children.html">Children类型电影数据</a></li>
+                        <li><a href="Tables_Adventure.html">Adventure类型电影数据</a></li>
+                        <li><a href="Tables_Fantasy.html">Fantasy类型电影数据</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="content-inner">
+
+ 
+            <!--***** REPORT-2 *****-->     
+            <div class="row" id="report2">
+                <div class="col-md-4">
+                    <div class="card card-c1">
+                        <div class="card-header card-chart" data-background-color="green">
+                            <canvas class="ct-chart" id="myChart1" height="250"></canvas>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="title">豆瓣top250电影上映日</h4>
+                            <p class="category">
+                                从这个分析表格中可以看出，在豆瓣已有数据的电影上映日中，上榜电影中上映日位周一周二的相对较多，仍不确定上榜原因与上榜日是否有相关关联</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card card-c1">
+                        <div class="card-header card-chart" data-background-color="orange">
+                            <canvas class="ct-chart" id="myChart2" height="250"></canvas>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="title">电影总评分与电影上映年份折线图</h4>
+                            <p class="category">从这个折线图中可以看到，将所有的电影评分加起来再与电影上映年份制作成相关关系折线图，不同颜色代表不同类型的电影类型，可以看出随着年份的增加，我们的电影行业优秀电影作品开始新兴出现，越来越多的电影作品开始出现在大众视线里，这里对未来的2050做了一个预测，预测在2050年电影的发展趋势</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card card-c1">
+                        <div class="card-header card-chart" data-background-color="red">
+                            <canvas class="ct-chart" id="myChart3" height="250"></canvas>
+                        </div>
+                        <div class="card-content">
+                            <h4 class="title">上榜电影所属国家与电影平均评分关系散点图</h4>
+                            <p class="category">从此图可以看出，中国的上榜电影虽上榜但是还是属于刚刚达到上榜要求的情况，丹麦的电影虽上榜数量少，但是平均评分处于较高位置，德国上榜电影数量中等，平均评分也处于中等地位的情况，日本的电影上榜数量还是处于比较多的情况。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--***** REPORT-3 *****-->     
+            <div class="row" id="report3">
+                <div class="col-md-8">
+                    <div class="card card-c2">
+                        <table class="table table-hover">
+                          <thead>
+                            <div class="dropdown pull-right menu-sett-card"> 
+                                <a id="notifications" class="nav-link" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-v men"></i> 
+                                </a>
+                            </div>
+                            <tr>
+                              <th>电影类型</th>
+                              <th>人们的喜爱程度 <!-- <i class="fa fa-ellipsis-v pull-right" ></i> -->
+                              </th>
+                            </tr>
+                          </thead>
+                            {{ Animation_data|safe }}
+                          <tbody>
+                            <tr>
+                              <td>Adventure</td>
+                              <td>
+                                  <div class="progress">
+                                      <div class="progress-bar bg-info" role="progressbar" style="width: 88%; height:10px;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                              </td>
+                                <td>88%</td>
+                            </tr>
+                            <tr>
+                              <td>Western</td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-info" role="progressbar" style="width: 83%; height:10px;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                                <td>83%</td>
+                            </tr>
+                            <tr>
+                              <td>Animation</td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-info" role="progressbar" style="width: 81%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                                <td>81%</td>
+                            </tr>
+                            <tr>
+                              <td>Mystery</td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-info" role="progressbar" style="width: 75%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                                <td>75%</td>
+                            </tr>
+                            <tr>
+                              <td>Horror</td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-info" role="progressbar" style="width: 64%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                                <td>64%</td>
+                            </tr>
+                            <tr>
+                              <td>Romance</td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-info" role="progressbar" style="width: 56%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                                <td>56%</td>
+                            </tr>
+                            <tr>
+                              <td>Drama</td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-info" role="progressbar" style="width: 42%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                                <td>42%</td>
+                            </tr>
+                            <tr>
+                              <td>Comedy</td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-info" role="progressbar" style="width: 40%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                                <td>40%</td>
+                            </tr>
+                            <tr>
+                              <td>Musical</td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-info" role="progressbar" style="width: 37%; height:10px;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                                <td>37%</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-c2">
+                        <div class="dropdown pull-right menu-sett-card" >
+                            <a id="notifications" class="nav-link" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v men"></i>
+                            </a>
+                        </div>
+                        <div class="header">
+                            <h4 class="title">上榜电影类型与电影数量之间关系玫瑰图</h4>
+                        </div>
+                        <div class="content">
+                            <canvas class="ct-chart" id="polar-chart" height="250"></canvas>
+                            <!-- <canvas class="ct-chart" id="myChart4" height="250"></canvas> -->
+
+                            <div class="footer">
+                                <div class="legend">
+                                    <i class="fa fa-circle text-info"></i> Musical
+                                    <i class="fa fa-circle text-danger"></i> Western
+                                    <i class="fa fa-circle text-warning"></i> Adventure
+                                </div>
+                                <hr>
+                                <div class="stats">
+                                   如我们所想，上榜电影类型和电影数量和平常人们对某种电影的喜好有密切的相关度
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+    <!--Global Javascript -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper/popper.min.js"></script>
+    <script src="/static/js/tether.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
+    <script src="/static/js/jquery.validate.min.js"></script>
+    <script src="/static/js/chart.min.js"></script>
+    <script src="/static/js/front.js"></script>
+    
+    <!--Core Javascript -->
+    <script src="/static/js/mychart.js"></script>
+</body>
+
+</html>
